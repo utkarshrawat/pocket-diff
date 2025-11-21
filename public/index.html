@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Diff | Deep JSON Comparator</title>
+    <meta name="description" content="Advanced JSON Diff tool, Formatters, and Developer Utilities.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">⚡ Pocket<span style="color:#3b82f6">Diff</span></div>
+        <div class="nav-links">
+            <button onclick="openTab('home')">⚖️ Diff Tool</button>
+            <button onclick="openTab('beautifier')">✨ JSON Format</button>
+            <button onclick="openTab('utilities')">🛠️ String Tools</button>
+            <button onclick="openTab('calculator')">💸 Calculator</button>
+            <button onclick="openTab('advanced-fin')">📈 Analysis</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div id="home" class="tab-content active">
+            <div class="tool-header">
+                <h2>JSON Deep Comparator</h2>
+                <p class="subtext">Paste two JSON objects below to visualize differences line-by-line.</p>
+            </div>
+
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="action-btn" onclick="compareMonaco()">🚀 Compare JSON</button>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="ignoreOrder"> Ignore Key Order
+                    </label>
+                </div>
+                
+                <div id="diffNav" class="toolbar-group hidden" style="border-left: 1px solid #334155; padding-left: 15px;">
+                    <span id="diffStats" style="font-family:'JetBrains Mono'; font-size:12px; color:#3b82f6; margin-right:10px;">0 Diffs</span>
+                    <button class="action-btn outline small" onclick="navDiff('prev')">⬆ Prev</button>
+                    <button class="action-btn outline small" onclick="navDiff('next')">⬇ Next</button>
+                    <button class="action-btn outline small" onclick="showDiffSearch()">🔍 Find</button>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <textarea id="rawJson1" placeholder='Paste Original JSON here...&#10;{ "id": 1, "name": "A" }'></textarea>
+                <textarea id="rawJson2" placeholder='Paste Modified JSON here...&#10;{ "id": 1, "name": "B" }'></textarea>
+            </div>
+            
+            <div id="monacoDiff" class="editor-box-large"></div>
+        </div>
+
+        <div id="beautifier" class="tab-content">
+            <h2>JSON Beautifier & Validator</h2>
+            <div class="toolbar">
+                <button class="action-btn" onclick="beautifyMonaco()">Format Document</button>
+                <button class="action-btn outline" onclick="showFindWidget()">Find</button>
+                <button class="action-btn outline" onclick="toggleFolding('fold')">Fold All</button>
+                <button class="action-btn outline" onclick="toggleFolding('unfold')">Unfold All</button>
+            </div>
+            <div id="monacoBeautify" class="editor-box"></div>
+        </div>
+
+        <div id="utilities" class="tab-content">
+            <h2>Text Transformation Tools</h2>
+            
+            <div class="tools-container-vertical">
+                <div class="io-box">
+                    <div class="io-header">
+                        <span>Input Text</span>
+                        <button class="icon-btn" onclick="clearText()">🗑️ Clear</button>
+                    </div>
+                    <textarea id="utilInput" placeholder="Type or paste text here..." oninput="updateStats()"></textarea>
+                    <div class="stats-bar" id="inputStats">0 chars | 0 words</div>
+                </div>
+
+                <div class="ops-bar">
+                    <div class="ops-group">
+                        <span class="group-label">Case</span>
+                        <button onclick="convertText('upper')">AA</button>
+                        <button onclick="convertText('lower')">aa</button>
+                        <button onclick="convertText('title')">Aa</button>
+                    </div>
+                    <div class="ops-group">
+                        <span class="group-label">Format</span>
+                        <button onclick="convertText('camel')">camelCase</button>
+                        <button onclick="convertText('snake')">snake_case</button>
+                        <button onclick="convertText('kebab')">kebab-case</button>
+                    </div>
+                    <div class="ops-group">
+                        <span class="group-label">Encode</span>
+                        <button onclick="convertText('base64enc')">B64 Enc</button>
+                        <button onclick="convertText('urlenc')">URL Enc</button>
+                    </div>
+                    <div class="ops-group">
+                        <span class="group-label">Decode</span>
+                        <button onclick="convertText('base64dec')">B64 Dec</button>
+                        <button onclick="convertText('urldec')">URL Dec</button>
+                    </div>
+                </div>
+
+                <div class="io-box">
+                    <div class="io-header">
+                        <span>Result</span>
+                        <button class="icon-btn" onclick="copyOutput()">📋 Copy Result</button>
+                    </div>
+                    <textarea id="utilOutput" placeholder="Result will appear here..." readonly></textarea>
+                    <div class="stats-bar" id="outputStats">0 chars | 0 words</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="calculator" class="tab-content center-view">
+            <h2>Time Value of Money</h2>
+            <div id="calcStatus" class="status-bar">Ready to Calculate</div>
+            
+            <div class="tvm-dashboard">
+                <div class="tvm-group"><label>N</label><input type="number" id="input_n"><button class="btn-mini" onclick="solveFor('n')">CPT</button></div>
+                <div class="tvm-group"><label>I/Y</label><input type="number" id="input_i"><button class="btn-mini" onclick="solveFor('i')">CPT</button></div>
+                <div class="tvm-group"><label>PV</label><input type="number" id="input_pv"><button class="btn-mini" onclick="solveFor('pv')">CPT</button></div>
+                <div class="tvm-group"><label>PMT</label><input type="number" id="input_pmt"><button class="btn-mini" onclick="solveFor('pmt')">CPT</button></div>
+                <div class="tvm-group"><label>FV</label><input type="number" id="input_fv"><button class="btn-mini" onclick="solveFor('fv')">CPT</button></div>
+            </div>
+
+            <div class="calc-body">
+                <div class="calc-screen" id="calcDisplay">0</div>
+                <div class="calc-grid">
+                    <button class="btn-func" onclick="assignToInput('n')">N</button>
+                    <button class="btn-func" onclick="assignToInput('i')">I/Y</button>
+                    <button class="btn-func" onclick="assignToInput('pv')">PV</button>
+                    <button class="btn-func" onclick="assignToInput('pmt')">PMT</button>
+                    <button class="btn-func" onclick="assignToInput('fv')">FV</button>
+                    <button class="btn-danger" onclick="resetTVM()">CLR</button>
+                    <button class="btn-num" onclick="calcInput('(')">(</button>
+                    <button class="btn-num" onclick="calcInput(')')">)</button>
+                    <button class="btn-num" onclick="calcInput('1/x')">1/x</button>
+                    <button class="btn-op" onclick="calcInput('/')">÷</button>
+                    <button class="btn-num" onclick="calcInput('7')">7</button>
+                    <button class="btn-num" onclick="calcInput('8')">8</button>
+                    <button class="btn-num" onclick="calcInput('9')">9</button>
+                    <button class="btn-op" onclick="calcInput('*')">×</button>
+                    <button class="btn-num" onclick="calcInput('sqrt')">√</button>
+                    <button class="btn-num" onclick="calcInput('4')">4</button>
+                    <button class="btn-num" onclick="calcInput('5')">5</button>
+                    <button class="btn-num" onclick="calcInput('6')">6</button>
+                    <button class="btn-op" onclick="calcInput('-')">-</button>
+                    <button class="btn-num" onclick="calcInput('y^x')">yˣ</button>
+                    <button class="btn-num" onclick="calcInput('1')">1</button>
+                    <button class="btn-num" onclick="calcInput('2')">2</button>
+                    <button class="btn-num" onclick="calcInput('3')">3</button>
+                    <button class="btn-op" onclick="calcInput('+')">+</button>
+                    <button class="btn-num" onclick="calcInput('+/-')">±</button>
+                    <button class="btn-num" onclick="calcInput('0')">0</button>
+                    <button class="btn-num" onclick="calcInput('.')">.</button>
+                    <button class="btn-submit" style="grid-column: span 3;" onclick="calculateResult()">ENTER</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="advanced-fin" class="tab-content">
+            <h2>Advanced Analysis</h2>
+            <div class="panel-grid">
+                <div class="panel">
+                    <h3>Amortization Schedule</h3>
+                    <p class="subtext">Requires inputs from Calculator Tab</p>
+                    <button class="action-btn" onclick="generateAmortization()">Generate Table</button>
+                    <div id="amortTableContainer"></div>
+                </div>
+                <div class="panel">
+                    <h3>Cash Flow (NPV & IRR)</h3>
+                    <div class="form-group"><label>Initial Outlay (CF0)</label><input type="number" id="cf0" placeholder="-10000"></div>
+                    <div class="form-group"><label>Cash Flows (comma separated)</label><input type="text" id="cashFlows" placeholder="2000, 3000, 4000, 5000"></div>
+                    <div class="form-group"><label>Discount Rate (%)</label><input type="number" id="discountRate" placeholder="10"></div>
+                    <button class="action-btn" onclick="calculateNPV_IRR()">Calculate</button>
+                    <div id="npvResult" class="result-box" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/calc-tvm.js"></script>
+    <script src="js/calc-adv.js"></script>
+    <script src="js/editors.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
