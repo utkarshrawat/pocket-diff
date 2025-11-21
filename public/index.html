@@ -6,6 +6,8 @@
     <title>Pocket Diff | Deep JSON Comparator</title>
     <meta name="description" content="Advanced JSON Diff tool, Formatters, and Developer Utilities.">
     
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -33,25 +35,25 @@
                 <p class="subtext">Paste two JSON objects below to visualize differences line-by-line.</p>
             </div>
 
-            <div class="toolbar">
-                <div class="toolbar-group">
-                    <button class="action-btn" onclick="compareMonaco()">🚀 Compare JSON</button>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="ignoreOrder"> Ignore Key Order
-                    </label>
-                </div>
-                
-                <div id="diffNav" class="toolbar-group hidden" style="border-left: 1px solid #334155; padding-left: 15px;">
-                    <span id="diffStats" style="font-family:'JetBrains Mono'; font-size:12px; color:#3b82f6; margin-right:10px;">0 Diffs</span>
-                    <button class="action-btn outline small" onclick="navDiff('prev')">⬆ Prev</button>
-                    <button class="action-btn outline small" onclick="navDiff('next')">⬇ Next</button>
-                    <button class="action-btn outline small" onclick="showDiffSearch()">🔍 Find</button>
-                </div>
-            </div>
-
             <div class="input-row">
                 <textarea id="rawJson1" placeholder='Paste Original JSON here...&#10;{ "id": 1, "name": "A" }'></textarea>
                 <textarea id="rawJson2" placeholder='Paste Modified JSON here...&#10;{ "id": 1, "name": "B" }'></textarea>
+            </div>
+
+            <div class="action-bar-middle">
+                <button class="action-btn large" onclick="compareMonaco()">🚀 Compare JSON</button>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="ignoreOrder"> Ignore Key Order
+                </label>
+            </div>
+
+            <div id="diffNav" class="toolbar-compact hidden">
+                <div class="stat-badge" id="diffStats">0 Differences</div>
+                <div class="nav-group">
+                    <button class="action-btn outline small" onclick="navDiff('prev')">⬆ Prev Diff</button>
+                    <button class="action-btn outline small" onclick="navDiff('next')">⬇ Next Diff</button>
+                    <button class="action-btn outline small" onclick="showDiffSearch()">🔍 Find</button>
+                </div>
             </div>
             
             <div id="monacoDiff" class="editor-box-large"></div>
@@ -169,7 +171,7 @@
             <div class="panel-grid">
                 <div class="panel">
                     <h3>Amortization Schedule</h3>
-                    <p class="subtext">Requires inputs from Calculator Tab</p>
+                    <p class="subtext">Requires N, I/Y, PV, PMT from Calculator</p>
                     <button class="action-btn" onclick="generateAmortization()">Generate Table</button>
                     <div id="amortTableContainer"></div>
                 </div>

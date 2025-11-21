@@ -24,7 +24,7 @@ require(['vs/editor/editor.main'], function () {
     // 2. Diff Editor
     diffEditorInstance = monaco.editor.createDiffEditor(document.getElementById('monacoDiff'), {
         theme: 'vs-dark',
-        originalEditable: true, // Allow editing left side too for convenience
+        originalEditable: true, // Allow editing left side too
         readOnly: false,
         automaticLayout: true,
         renderSideBySide: true
@@ -85,8 +85,8 @@ function compareMonaco() {
         });
 
         // Show navigation controls
-        document.getElementById('diffNav').classList.remove('hidden');
-        document.getElementById('diffNav').style.display = "flex"; // Force flex
+        const navBar = document.getElementById('diffNav');
+        navBar.classList.remove('hidden');
         
         // Wait for render then calculate stats
         setTimeout(calculateDiffs, 500);
@@ -99,7 +99,7 @@ function compareMonaco() {
 function calculateDiffs() {
     diffNavigator = diffEditorInstance.getLineChanges();
     const count = diffNavigator ? diffNavigator.length : 0;
-    document.getElementById('diffStats').innerText = `${count} Diff(s)`;
+    document.getElementById('diffStats').innerText = `${count} Differences`;
     
     if (count > 0) {
         currentDiffIndex = -1;
