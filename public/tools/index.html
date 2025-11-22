@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav></nav>
+
+    <div class="container">
+        <div id="devtools" class="active">
+            <div class="dev-layout">
+                
+                <div class="dev-sidebar">
+                    <button class="sidebar-btn active" onclick="openSubTab('tool-text', this)">📝 Text</button>
+                    <button class="sidebar-btn" onclick="openSubTab('tool-regex', this)">🧠 Regex</button>
+                    <button class="sidebar-btn" onclick="openSubTab('tool-jwt', this)">🔐 JWT</button>
+                    <button class="sidebar-btn" onclick="openSubTab('tool-time', this)">⏳ Time</button>
+                    <button class="sidebar-btn" onclick="openSubTab('tool-color', this)">🎨 Color</button>
+                </div>
+
+                <div class="dev-content">
+                    
+                    <div id="tool-text" class="sub-tab active">
+                        <div class="tool-header-small">
+                            <h3>String Transformer</h3>
+                            <button class="action-btn outline small" onclick="clearText()">🗑️ Clear</button>
+                        </div>
+                        
+                        <div class="io-box">
+                            <label class="input-label">INPUT</label>
+                            <textarea id="utilInput" class="full-text" placeholder="Type or paste text here..." oninput="updateTextStats()"></textarea>
+                            <div class="stats-bar" id="textStats">0 chars | 0 words</div>
+                        </div>
+
+                        <div class="ops-bar" style="margin: 15px 0;">
+                            <div class="ops-group">
+                                <button onclick="convertText('upper')">UPPER</button>
+                                <button onclick="convertText('lower')">lower</button>
+                                <button onclick="convertText('title')">Title Case</button>
+                            </div>
+                            <div class="ops-group">
+                                <button onclick="convertText('camel')">camelCase</button>
+                                <button onclick="convertText('snake')">snake_case</button>
+                                <button onclick="convertText('kebab')">kebab-case</button>
+                            </div>
+                            <div class="ops-group">
+                                <button onclick="convertText('base64enc')">B64 Enc</button>
+                                <button onclick="convertText('base64dec')">B64 Dec</button>
+                            </div>
+                            <div class="ops-group">
+                                <button onclick="convertText('urlenc')">URL Enc</button>
+                                <button onclick="convertText('urldec')">URL Dec</button>
+                            </div>
+                        </div>
+
+                        <div class="io-box">
+                            <div class="tool-header-small">
+                                <label class="input-label">RESULT</label>
+                                <button class="action-btn outline small" onclick="copyOutput()">📋 Copy Result</button>
+                            </div>
+                            <textarea id="utilOutput" class="full-text" placeholder="Result will appear here..." readonly></textarea>
+                        </div>
+                    </div>
+
+                    <div id="tool-regex" class="sub-tab">
+                        <div class="tool-header-small">
+                            <h3>Regex Tester</h3>
+                            <div style="display:flex; gap:10px;">
+                                <button class="action-btn outline small" onclick="loadRegexExample()">Load Example</button>
+                                <button class="action-btn outline small" onclick="clearRegex()">🗑️ Clear</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pattern (JS)</label>
+                            <input type="text" id="regexPattern" placeholder="/[a-z]+/g" oninput="runRegex()">
+                        </div>
+                        <div class="form-group">
+                            <label>Test String</label>
+                            <textarea id="regexInput" class="short-text" placeholder="Text to test..." oninput="runRegex()"></textarea>
+                        </div>
+                        <div id="regexResult" class="result-box">Matches will appear here...</div>
+                    </div>
+
+                    <div id="tool-jwt" class="sub-tab">
+                        <div class="tool-header-small">
+                            <h3>JWT Decoder</h3>
+                            <div style="display:flex; gap:10px;">
+                                <button class="action-btn outline small" onclick="loadJwtExample()">Load Example</button>
+                                <button class="action-btn outline small" onclick="clearJwt()">🗑️ Clear</button>
+                            </div>
+                        </div>
+                        <textarea id="jwtInput" class="short-text" placeholder="Paste eyJhbGci..." oninput="decodeJWT()"></textarea>
+                        <div class="jwt-grid">
+                            <div class="jwt-box">
+                                <label>Header</label>
+                                <pre id="jwtHeader">{}</pre>
+                            </div>
+                            <div class="jwt-box">
+                                <label>Payload</label>
+                                <pre id="jwtPayload">{}</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tool-time" class="sub-tab">
+                        <div class="tool-header-small">
+                            <h3>Timestamp Converter</h3>
+                            <button class="action-btn outline small" onclick="clearTime()">🗑️ Reset</button>
+                        </div>
+                        
+                        <div class="time-row">
+                            <div class="form-group">
+                                <label>Epoch Timestamp</label>
+                                <input type="number" id="tsInput" placeholder="e.g. 1678900000">
+                            </div>
+                            <button class="action-btn small" onclick="convertTime('toHuman')">To Date ➡️</button>
+                        </div>
+                        <div id="tsResult" class="highlight-box"></div>
+                        
+                        <hr style="border-color:#333; margin:20px 0;">
+                        
+                        <div class="time-row">
+                            <div class="form-group">
+                                <label>Human Date</label>
+                                <input type="datetime-local" id="dateInput">
+                            </div>
+                            <button class="action-btn small" onclick="convertTime('toEpoch')">To Epoch ➡️</button>
+                        </div>
+                        <div id="dateResult" class="highlight-box"></div>
+                    </div>
+
+                    <div id="tool-color" class="sub-tab">
+                        <div class="tool-header-small">
+                            <h3>Color Converter</h3>
+                            <button class="action-btn outline small" onclick="clearColor()">🗑️ Reset</button>
+                        </div>
+                        
+                        <div class="color-container">
+                            <div class="color-left">
+                                <input type="color" id="colorPicker" oninput="convertColor('picker')">
+                            </div>
+                            
+                            <div class="color-right">
+                                <div class="form-group">
+                                    <label>Hex Code</label>
+                                    <input type="text" id="colorHex" placeholder="#FFFFFF" oninput="convertColor('hex')">
+                                </div>
+                                <div class="form-group">
+                                    <label>RGB Value</label>
+                                    <input type="text" id="colorRgb" placeholder="rgb(255, 255, 255)" oninput="convertColor('rgb')">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="colorPreview" class="color-preview-bar"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/nav.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

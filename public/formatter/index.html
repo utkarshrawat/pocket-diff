@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Formatter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav></nav>
+    
+    <div id="toastContainer" class="toast-container">
+        <div id="toastMessage" class="toast-message"></div>
+    </div>
+
+    <div class="container">
+        <div id="beautifier" class="active">
+            <div class="split-header">
+                <h2>Code Formatter</h2>
+                <div class="mode-toggle">
+                    <button class="mode-btn active" id="btnModeJson" onclick="setEditorMode('json')">JSON</button>
+                    <button class="mode-btn" id="btnModeSql" onclick="setEditorMode('sql')">SQL</button>
+                </div>
+            </div>
+            <div class="toolbar">
+                <button class="action-btn" onclick="formatCode()">Format Document</button>
+                <button class="action-btn outline" onclick="showFindWidget()" title="Search (Ctrl+F)">🔍</button>
+                <button class="action-btn outline" onclick="toggleFolding('fold')">Collapse</button>
+                <button class="action-btn outline" onclick="toggleFolding('unfold')">Expand</button>
+                <button class="action-btn outline" onclick="clearEditor()" style="color: #ef4444; border-color: rgba(239,68,68,0.5);">🗑️ Clear</button>
+            </div>
+            <div id="monacoBeautify" class="editor-box"></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
