@@ -3,84 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pocket Diff | Deep JSON Comparator</title>
+    <title>Pocket Diff | The Developer OS</title>
+    <meta name="description" content="All-in-one Developer Utilities: JSON Diff, Formatter, Image Tools, PDF Tools, and Financial Calculator. 100% Offline.">
+    
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
     <nav></nav>
 
-    <div class="container">
-        <div id="home" class="active">
+    <div class="landing-container">
+        
+        <header class="hero">
+            <div class="hero-badge">v2.0 • Offline Ready</div>
+            <h1>The Ultimate <br><span class="gradient-text">Developer Toolkit</span></h1>
+            <p class="hero-desc">
+                A privacy-first suite of essential tools. Compare code, format JSON, edit images, and calculate finances—all without sending data to a server.
+            </p>
+            <div class="hero-actions">
+                <a href="/diff/" class="cta-btn primary">Start Comparing</a>
+            </div>
+        </header>
+
+        <main class="grid-section">
             
-            <div class="tool-header">
-                <h2>JSON Deep Comparator</h2>
-                <p class="subtext">Paste two JSON objects below to visualize differences.</p>
-            </div>
-
-            <div class="input-row">
-                <div class="input-group">
-                    <div class="input-header">
-                        <span>ORIGINAL (Left)</span>
-                        <button class="btn-clear" onclick="clearInput('left')">🗑️ Clear</button>
-                    </div>
-                    <textarea id="rawJson1" placeholder='{ "id": 1, "name": "Original" }'></textarea>
+            <a href="/diff/" class="tool-card">
+                <div class="card-icon diff-icon">⚖️</div>
+                <div class="card-content">
+                    <h3>Deep Comparator</h3>
+                    <p>Compare JSON objects line-by-line with intelligent merge tools.</p>
                 </div>
-                
-                <div class="input-group">
-                    <div class="input-header">
-                        <span>MODIFIED (Right)</span>
-                        <button class="btn-clear" onclick="clearInput('right')">🗑️ Clear</button>
-                    </div>
-                    <textarea id="rawJson2" placeholder='{ "id": 1, "name": "Modified" }'></textarea>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="/formatter/" class="tool-card">
+                <div class="card-icon format-icon">✨</div>
+                <div class="card-content">
+                    <h3>Code Formatter</h3>
+                    <p>Beautify and validate JSON & SQL. Fix syntax errors instantly.</p>
                 </div>
-            </div>
+                <div class="card-arrow">→</div>
+            </a>
 
-            <div class="action-bar-middle">
-                <button class="action-btn large" onclick="compareMonaco()">🚀 Compare JSON</button>
-                <label class="checkbox-label">
-                    <input type="checkbox" id="ignoreOrder"> Ignore Key Order
-                </label>
-            </div>
-
-            <div id="resultArea" class="result-container hidden">
-                <div class="diff-toolbar">
-                    
-                    <div class="merge-group">
-                        <button id="btnMergeLeft" class="btn-merge" onclick="initMerge('left')">⬅ Merge to Left</button>
-                        <button id="btnMergeRight" class="btn-merge" onclick="initMerge('right')">Merge to Right ➡</button>
-                    </div>
-                    
-                    <div class="diff-stats" id="diffStats">0 Differences</div>
-
-                    <div class="nav-group">
-                        <button class="action-btn outline small" onclick="navDiff('prev')">⬆ Prev</button>
-                        <button class="action-btn outline small" onclick="navDiff('next')">⬇ Next</button>
-                        <button class="action-btn outline small" onclick="showDiffSearch()" title="Search">🔍</button>
-                    </div>
+            <a href="/tools/" class="tool-card">
+                <div class="card-icon dev-icon">🛠️</div>
+                <div class="card-content">
+                    <h3>Dev Utilities</h3>
+                    <p>Regex Tester, JWT Decoder, Unix Time, Color Converter, and Base64.</p>
                 </div>
-                
-                <div id="monacoDiff" class="editor-box-large"></div>
-            </div>
-        </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="/images/" class="tool-card">
+                <div class="card-icon img-icon">🖼️</div>
+                <div class="card-content">
+                    <h3>Image Studio</h3>
+                    <p>Crop, Resize, Compress, and Convert images in the browser.</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="/pdf/" class="tool-card">
+                <div class="card-icon pdf-icon">📄</div>
+                <div class="card-content">
+                    <h3>PDF Manager</h3>
+                    <p>Merge multiple PDFs, split pages, and view documents securely.</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <a href="/calculator/" class="tool-card">
+                <div class="card-icon calc-icon">💸</div>
+                <div class="card-content">
+                    <h3>Financial Calc</h3>
+                    <p>Professional TVM Calculator, Amortization Schedules, and NPV/IRR.</p>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+        </main>
+
+        <footer class="landing-footer">
+            <p>© 2023 Pocket Diff. 100% Client-Side & Private.</p>
+        </footer>
     </div>
 
-    <div id="confirmModal" class="modal-overlay hidden">
-        <div class="modal-box">
-            <h3>Confirm Merge</h3>
-            <p id="modalText">Are you sure?</p>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn-confirm" onclick="executeMerge()">Yes, Merge</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/diff.js"></script>
 </body>
 </html>

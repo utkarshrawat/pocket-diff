@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tools | Pocket Diff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body>
+    <nav></nav>
+
+    <div class="container">
+        <div id="pdfTools" class="active">
+            
+            <div class="dev-layout">
+                <div class="dev-sidebar">
+                    <button class="sidebar-btn active" onclick="openSubTab('tool-view', this)">👁️ Viewer</button>
+                    <button class="sidebar-btn" onclick="openSubTab('tool-merge', this)">🔗 Merge</button>
+                    <button class="sidebar-btn" onclick="openSubTab('tool-split', this)">✂️ Split</button>
+                </div>
+
+                <div class="dev-content">
+                    
+                    <div id="tool-view" class="sub-tab active">
+                        <div class="header-row">
+                            <h3>PDF Viewer</h3>
+                            <button class="action-btn outline small" style="color:#ef4444; border-color:rgba(239,68,68,0.5);" onclick="clearViewer()">🗑️ Clear</button>
+                        </div>
+                        <div class="upload-box" onclick="document.getElementById('viewInput').click()">
+                            <input type="file" id="viewInput" accept="application/pdf" hidden onchange="loadViewer(this)">
+                            <span id="viewLabel">Click to Open PDF</span>
+                        </div>
+                        <div id="pdfFrameContainer" class="pdf-container hidden"></div>
+                    </div>
+
+                    <div id="tool-merge" class="sub-tab">
+                        <div class="header-row">
+                            <h3>Merge PDFs</h3>
+                            <button class="action-btn outline small" onclick="clearMerge()">🗑️ Reset</button>
+                        </div>
+                        <p class="subtext">Combine multiple PDF files into one.</p>
+                        
+                        <div class="upload-box" onclick="document.getElementById('mergeInput').click()">
+                            <input type="file" id="mergeInput" accept="application/pdf" multiple hidden onchange="handleMergeSelect(this)">
+                            <span>📂 Add PDFs (Select Multiple)</span>
+                        </div>
+                        
+                        <ul id="mergeList" class="file-list"></ul>
+                        
+                        <button id="btnMerge" class="action-btn large hidden" onclick="executeMerge()">⬇ Merge & Download</button>
+                    </div>
+
+                    <div id="tool-split" class="sub-tab">
+                        <div class="header-row">
+                            <h3>Split / Extract Pages</h3>
+                            <button class="action-btn outline small" onclick="clearSplit()">🗑️ Reset</button>
+                        </div>
+                        
+                        <div class="upload-box" onclick="document.getElementById('splitInput').click()">
+                            <input type="file" id="splitInput" accept="application/pdf" hidden onchange="handleSplitSelect(this)">
+                            <span id="splitLabel">📂 Select PDF</span>
+                        </div>
+                        
+                        <div id="splitControls" class="hidden" style="margin-top:20px;">
+                            <div class="form-group">
+                                <label>Page Ranges (e.g., "1, 3-5, 10")</label>
+                                <input type="text" id="pageRange" placeholder="1-2, 5">
+                                <small style="color:#94a3b8; display:block; margin-top:5px;">Total Pages in Document: <span id="totalPages">-</span></small>
+                            </div>
+                            <button class="action-btn large" style="margin-top:15px;" onclick="executeSplit()">⬇ Extract Pages</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/nav.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

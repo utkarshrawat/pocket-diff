@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Comparator | Pocket Diff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav></nav>
+
+    <div class="container">
+        <div id="home" class="active">
+            
+            <div class="tool-header">
+                <h2>JSON Deep Comparator</h2>
+                <p class="subtext">Paste two JSON objects below to visualize differences.</p>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <div class="input-header">
+                        <span>ORIGINAL (Left)</span>
+                        <button class="btn-clear" onclick="clearInput('left')">🗑️ Clear</button>
+                    </div>
+                    <textarea id="rawJson1" placeholder='{ "id": 1, "name": "Original" }'></textarea>
+                </div>
+                <div class="input-group">
+                    <div class="input-header">
+                        <span>MODIFIED (Right)</span>
+                        <button class="btn-clear" onclick="clearInput('right')">🗑️ Clear</button>
+                    </div>
+                    <textarea id="rawJson2" placeholder='{ "id": 1, "name": "Modified" }'></textarea>
+                </div>
+            </div>
+
+            <div class="action-bar-middle">
+                <button class="action-btn large" onclick="compareMonaco()">🚀 Compare JSON</button>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="ignoreOrder"> Ignore Key Order
+                </label>
+            </div>
+
+            <div id="resultArea" class="result-container hidden">
+                <div class="diff-toolbar">
+                    <div class="merge-group">
+                        <button id="btnMergeLeft" class="btn-merge" onclick="initMerge('left')">⬅ Merge to Left</button>
+                        <button id="btnMergeRight" class="btn-merge" onclick="initMerge('right')">Merge to Right ➡</button>
+                    </div>
+                    
+                    <div class="diff-stats" id="diffStats">0 Diffs</div>
+                    
+                    <div class="nav-group">
+                        <button class="action-btn outline small" onclick="navDiff('prev')">⬆ Prev</button>
+                        <button class="action-btn outline small" onclick="navDiff('next')">⬇ Next</button>
+                        <button class="action-btn outline small" onclick="showDiffSearch()" title="Search">🔍</button>
+                    </div>
+                </div>
+                <div id="monacoDiff" class="editor-box-large"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Confirm Merge</h3>
+            <p id="modalText">Are you sure?</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-confirm" onclick="executeMerge()">Yes, Merge</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

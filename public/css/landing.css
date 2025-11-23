@@ -1,0 +1,199 @@
+/* =========================================
+   LANDING PAGE STYLES
+   ========================================= */
+
+/* Page Background Override */
+body {
+    background-color: #0f172a;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+    background-attachment: fixed;
+}
+
+/* --- Main Container (Scrollable) --- */
+.landing-container {
+    max-width: 100%; /* Full width */
+    height: 100vh;   /* Full viewport height */
+    overflow-y: auto; /* Allow vertical scrolling */
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Hero Section --- */
+.hero {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    animation: fadeIn 0.6s ease-out;
+    max-width: 800px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 56px;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: white;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-desc {
+    font-size: 18px;
+    color: #94a3b8;
+    margin: 0 auto 30px auto;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.cta-btn {
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.cta-btn.primary {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+}
+.cta-btn.primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* --- Grid Section --- */
+.grid-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 1200px; /* Limit grid width */
+    margin-bottom: 60px;
+    animation: slideUp 0.8s ease-out;
+}
+
+.tool-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 24px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+}
+
+/* Icon Styles */
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tool-card:hover .diff-icon { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.tool-card:hover .format-icon { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+.tool-card:hover .dev-icon { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+.tool-card:hover .img-icon { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+.tool-card:hover .pdf-icon { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.tool-card:hover .calc-icon { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+
+.card-content h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    color: #f8fafc;
+}
+
+.card-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+.card-arrow {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: #475569;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s;
+}
+
+.tool-card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    color: #60a5fa;
+}
+
+/* --- Footer --- */
+.landing-footer {
+    margin-top: auto;
+    padding-bottom: 40px;
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 36px; }
+    .grid-section { grid-template-columns: 1fr; }
+    .landing-container { padding: 0 15px; }
+}
