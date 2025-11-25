@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TVM Financial Calculator (BA II Plus Style)</title>
-    <meta name="description" content="Free online Time Value of Money (TVM) calculator. Compute NPV, IRR, Amortization Schedules, and Interest Conversion. Matches BA II Plus logic.">
-    <meta name="keywords" content="tvm calculator, finance calculator, ba ii plus online, npv calculator, irr calculator, amortization schedule, interest conversion">
-    
+    <title>TVM Financial Calculator (BA II Plus)</title>
+    <meta name="description" content="Free online Time Value of Money (TVM) calculator. Compute NPV, IRR, and Amortization. Matches BA II Plus logic.">
+    <link rel="canonical" href="https://pocketbattlesimulator.com/calculator/" />
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="style.css">
-    <script src="/js/analytics.js"></script>
 </head>
 <body>
     <nav></nav>
@@ -30,56 +29,60 @@
 
                 <div class="tvm-dashboard">
                     <div class="tvm-group">
-                        <label>N <span class="info-icon" data-tooltip="Number of Periods.&#10;Total number of payments.&#10;Example: 30 year mortgage x 12 months = 360.">i</span></label>
+                        <label>N <span class="info-icon" data-tooltip="Number of Periods.&#10;e.g. 30 years * 12 = 360">i</span></label>
                         <input type="number" id="input_n"><button class="btn-mini" onclick="solveFor('n')">CPT</button>
                     </div>
                     <div class="tvm-group">
-                        <label>I/Y <span class="info-icon" data-tooltip="Annual Interest Rate.&#10;Enter as a percentage, NOT decimal.&#10;Example: Enter 5.5 for 5.5%.">i</span></label>
+                        <label>I/Y <span class="info-icon" data-tooltip="Annual Interest Rate %.&#10;Enter 5.5 for 5.5%">i</span></label>
                         <input type="number" id="input_i"><button class="btn-mini" onclick="solveFor('i')">CPT</button>
                     </div>
                     <div class="tvm-group">
-                        <label>PV <span class="info-icon" data-tooltip="Present Value (Start).&#10;Positive (+) for Loan Amount you receive.&#10;Negative (-) for Initial Investment you pay out.">i</span></label>
+                        <label>PV <span class="info-icon" data-tooltip="Present Value.&#10;Loan (+) or Invest (-)">i</span></label>
                         <input type="number" id="input_pv"><button class="btn-mini" onclick="solveFor('pv')">CPT</button>
                     </div>
                     <div class="tvm-group">
-                        <label>PMT <span class="info-icon" data-tooltip="Periodic Payment.&#10;Negative (-) if you pay money (Mortgage).&#10;Positive (+) if you receive money (Annuity).">i</span></label>
+                        <label>PMT <span class="info-icon" data-tooltip="Payment.&#10;Pay (-) or Receive (+)">i</span></label>
                         <input type="number" id="input_pmt"><button class="btn-mini" onclick="solveFor('pmt')">CPT</button>
                     </div>
                     <div class="tvm-group">
-                        <label>FV <span class="info-icon" data-tooltip="Future Value (End).&#10;Value at the end of the term.&#10;Enter 0 for a loan payoff.&#10;Positive (+) for savings goal.">i</span></label>
+                        <label>FV <span class="info-icon" data-tooltip="Future Value.&#10;Usually 0 for loans.">i</span></label>
                         <input type="number" id="input_fv"><button class="btn-mini" onclick="solveFor('fv')">CPT</button>
                     </div>
                 </div>
 
                 <div class="calc-body">
+                    <div class="toast-container">
+                        <div id="calcToast" class="toast-message"></div>
+                    </div>
+                    
                     <input type="text" class="calc-screen" id="calcDisplay" value="0" readonly>
+                    
                     <div class="calc-grid">
-    
-                        
+                        <button class="btn-func" onclick="assignToInput('n')">N</button>
+                        <button class="btn-func" onclick="assignToInput('i')">I/Y</button>
+                        <button class="btn-func" onclick="assignToInput('pv')">PV</button>
+                        <button class="btn-func" onclick="assignToInput('pmt')">PMT</button>
+                        <button class="btn-func" onclick="assignToInput('fv')">FV</button>
                         <button class="btn-danger" onclick="resetTVM()">CLR</button>
                         <button class="btn-num" onclick="calcInput('(')">(</button>
                         <button class="btn-num" onclick="calcInput(')')">)</button>
                         <button class="btn-num" onclick="calcInput('1/x')">1/x</button>
                         <button class="btn-op" onclick="calcInput('/')">÷</button>
-
                         <button class="btn-num" onclick="calcInput('7')">7</button>
                         <button class="btn-num" onclick="calcInput('8')">8</button>
                         <button class="btn-num" onclick="calcInput('9')">9</button>
                         <button class="btn-op" onclick="calcInput('*')">×</button>
                         <button class="btn-num" onclick="calcInput('sqrt')">√x</button>
-
                         <button class="btn-num" onclick="calcInput('4')">4</button>
                         <button class="btn-num" onclick="calcInput('5')">5</button>
                         <button class="btn-num" onclick="calcInput('6')">6</button>
                         <button class="btn-op" onclick="calcInput('-')">-</button>
                         <button class="btn-num" onclick="calcInput('y^x')">yˣ</button>
-
                         <button class="btn-num" onclick="calcInput('1')">1</button>
                         <button class="btn-num" onclick="calcInput('2')">2</button>
                         <button class="btn-num" onclick="calcInput('3')">3</button>
                         <button class="btn-op" onclick="calcInput('+')">+</button>
                         <button class="btn-num" onclick="calcInput('+/-')">±</button>
-
                         <button class="btn-num" onclick="calcInput('0')">0</button>
                         <button class="btn-num" onclick="calcInput('.')">.</button>
                         <button class="btn-submit" style="grid-column: span 2;" onclick="calculateResult()">ENTER</button>
@@ -94,24 +97,12 @@
                         <h3>Amortization Schedule</h3>
                         <p class="subtext">Generate Schedule. (Inputs synced from Calculator)</p>
                         <div class="row-group">
-                            <div class="setting-group">
-                                <label>N <span class="info-icon" data-tooltip="Total number of payments to calculate.">i</span></label>
-                                <input type="number" id="amort_n">
-                            </div>
-                            <div class="setting-group">
-                                <label>I/Y <span class="info-icon" data-tooltip="Annual Interest Rate %">i</span></label>
-                                <input type="number" id="amort_i">
-                            </div>
+                            <div class="setting-group"><label>N <span class="info-icon" data-tooltip="Total Payments">i</span></label><input type="number" id="amort_n"></div>
+                            <div class="setting-group"><label>I/Y <span class="info-icon" data-tooltip="Interest %">i</span></label><input type="number" id="amort_i"></div>
                         </div>
                         <div class="row-group">
-                            <div class="setting-group">
-                                <label>PV <span class="info-icon" data-tooltip="Starting Principal / Loan Amount.">i</span></label>
-                                <input type="number" id="amort_pv">
-                            </div>
-                            <div class="setting-group">
-                                <label>PMT <span class="info-icon" data-tooltip="Periodic Payment Amount.">i</span></label>
-                                <input type="number" id="amort_pmt">
-                            </div>
+                            <div class="setting-group"><label>PV <span class="info-icon" data-tooltip="Principal">i</span></label><input type="number" id="amort_pv"></div>
+                            <div class="setting-group"><label>PMT <span class="info-icon" data-tooltip="Payment">i</span></label><input type="number" id="amort_pmt"></div>
                         </div>
                         <button class="action-btn" style="width:100%; margin-top:10px;" onclick="generateAmortization()">Generate</button>
                         <div id="amortTableContainer"></div>
@@ -120,39 +111,22 @@
                     <div class="panel">
                         <h3>Interest Conversion</h3>
                         <p class="subtext">Nominal (NOM) ↔ Effective (EFF)</p>
-                        <div class="form-group">
-                            <label>Nominal % (NOM) <span class="info-icon" data-tooltip="Stated Annual Percentage Rate (APR).&#10;The simple interest rate without compounding.">i</span></label>
-                            <input type="number" id="iconv_nom">
-                        </div>
-                        <div class="form-group" style="margin-top:10px;">
-                            <label>Effective % (EFF) <span class="info-icon" data-tooltip="Annual Percentage Yield (APY).&#10;The true rate including the effect of compounding.">i</span></label>
-                            <input type="number" id="iconv_eff">
-                        </div>
-                        <div class="form-group" style="margin-top:10px;">
-                            <label>Compounding (C/Y) <span class="info-icon" data-tooltip="Times compounded per year.&#10;12 = Monthly&#10;4 = Quarterly&#10;365 = Daily">i</span></label>
-                            <input type="number" id="iconv_cy" value="12">
-                        </div>
+                        <div class="form-group"><label>Nominal % (NOM) <span class="info-icon" data-tooltip="Annual Percentage Rate (APR)">i</span></label><input type="number" id="iconv_nom"></div>
+                        <div class="form-group" style="margin-top:10px;"><label>Effective % (EFF) <span class="info-icon" data-tooltip="Annual Percentage Yield (APY)">i</span></label><input type="number" id="iconv_eff"></div>
+                        <div class="form-group" style="margin-top:10px;"><label>C/Y</label><input type="number" id="iconv_cy" value="12"></div>
                         <div class="row-group" style="margin-top:20px;">
                             <button class="action-btn outline small" onclick="calcIconv('eff')">Compute EFF</button>
                             <button class="action-btn outline small" onclick="calcIconv('nom')">Compute NOM</button>
                         </div>
                     </div>
-
-                    <div class="panel" style="grid-column: span 2;"> <h3>Cash Flow (NPV/IRR)</h3>
+                    
+                    <div class="panel" style="grid-column: span 2;">
+                        <h3>Cash Flow (NPV/IRR)</h3>
                         <div class="row-group">
-                            <div class="form-group">
-                                <label>Initial (CF0) <span class="info-icon" data-tooltip="Initial Investment Cost.&#10;Must be a negative number (e.g. -10000).">i</span></label>
-                                <input type="number" id="cf0" placeholder="-10000">
-                            </div>
-                            <div class="form-group">
-                                <label>Rate % <span class="info-icon" data-tooltip="Discount Rate / Required Rate of Return.&#10;The interest rate used to discount future cash flows.">i</span></label>
-                                <input type="number" id="discountRate" placeholder="10">
-                            </div>
+                            <div class="form-group"><label>Initial (CF0) <span class="info-icon" data-tooltip="Cost (Negative)">i</span></label><input type="number" id="cf0" placeholder="-10000"></div>
+                            <div class="form-group"><label>Rate %</label><input type="number" id="discountRate" placeholder="10"></div>
                         </div>
-                        <div class="form-group">
-                            <label>Flows <span class="info-icon" data-tooltip="Future Cash Flows.&#10;Enter numbers separated by commas.&#10;Example: 2000, 3000, 4000">i</span></label>
-                            <input type="text" id="cashFlows" placeholder="2000, 3000...">
-                        </div>
+                        <div class="form-group"><label>Flows (comma sep) <span class="info-icon" data-tooltip="Example: 2000, 3000, 4000">i</span></label><input type="text" id="cashFlows" placeholder="2000, 3000..."></div>
                         <button class="action-btn" style="width:100%; margin-top:10px;" onclick="calculateNPV_IRR()">Calculate</button>
                         <div id="npvResult" class="result-box" style="display:none;"></div>
                     </div>
@@ -160,11 +134,6 @@
             </div>
         </div>
     </div>
-    <script src="../js/nav.js"></script>
-    <script src="../js/storage.js"></script>
-    <script src="script.js"></script>
-    <div class="toast-container"><div id="calcToast" class="toast-message"></div></div>
-
     <script src="../js/nav.js"></script>
     <script src="../js/storage.js"></script>
     <script src="script.js"></script>
